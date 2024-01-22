@@ -5,6 +5,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from datetime import datetime
+import subprocess
 
 def print_tree(tree,indent=0):
     try:
@@ -101,6 +102,29 @@ def plot_commit_timeline(repo):
     plt.clf()
 
 
+def git_log_graph():
+    command=['git', 'log', '--graph', '--oneline', '--all']
+    #result=subprocess.run(command,cwd=os.path.join(local_path,'Python_Scripting'),stdout=subprocess.PIPE, text=True)
+    #print(result.stdout)
+    #print(result.returncode)
+
+    #subprocess.run helps to execure run commands
+    #It returns a CompletedProcess object with information about the completed process, including the return code and output.
+
+    #command = ['git','push' ]
+    #result=subprocess.run(command, cwd=os.path.join(local_path,'Python_Scripting'),stdout=subprocess.PIPE, text=True)
+    #print(result.stdout)
+
+    #Along with run, there is another subprocess.Popen
+    process=subprocess.Popen(command, cwd=os.path.join(local_path,'Python_Scripting'),stdout=subprocess.PIPE, text=True)
+    output, error = process.communicate()
+    print(f"return code  is \n {process.returncode}")
+    print(output)
+    print(error)
+
+
+
+
 
 print(f"current working directiory is {os.getcwd()}")
 
@@ -131,3 +155,6 @@ basic_repo_details()
 
 #Most active contributors and contributions in a graphical format
 analyze_repository()
+
+#using subprocess module to run shell commands to get git log graph
+git_log_graph()
